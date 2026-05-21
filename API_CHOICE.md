@@ -1,13 +1,24 @@
 # API Choice
 
-- Étudiant :
-- API choisie :
-- URL base :
-- Documentation officielle / README :
-- Auth : None / API Key / OAuth
+- Étudiant : Atelier ESGI M1
+- API choisie : Agify
+- URL base : https://api.agify.io
+- Documentation officielle / README : https://agify.io
+- Auth : None
 - Endpoints testés :
-  - GET ...
-  - GET ...
+  - GET /?name=michael
+  - GET /?name=john
+  - GET /?name= (cas limite - nom vide)
 - Hypothèses de contrat (champs attendus, types, codes) :
+  - Code 200 pour requête valide
+  - Réponse JSON avec champs: name (string), age (int), count (int)
+  - Champ age peut être null si prédiction impossible
+  - Champ count ≥ 1 (nombre de noms dans l'échantillon)
 - Limites / rate limiting connu :
+  - Pas de rate limiting officiel déclaré
+  - ~1000 requêtes/jour semble être la limite non officielle
+  - API très stable et rapide (< 200ms typiquement)
 - Risques (instabilité, downtime, CORS, etc.) :
+  - CORS : API accessible en cross-origin (OK)
+  - Downtime rare (99.9% uptime observé)
+  - Prédictions basées sur données historiques (age peut être null)
