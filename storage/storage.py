@@ -104,6 +104,18 @@ class TestStorage:
 
         # Insérer les détails des tests
         for test in result.get("tests", []):
+            details = test.get("details")
+            if isinstance(details, (dict, list)):
+                details = json.dumps(details, ensure_ascii=True)
+            elif details is None:
+                details = ""
+            else:
+                details = str(details)
+
+            passed_value = test.get("passed", False)
+            if not isinstance(passed_value, bool):
+                passed_value = bool(passed_value)
+
             cursor.execute("""
                 INSERT INTO test_details (
                     run_id, test_name, passed, details, latency_ms
@@ -111,8 +123,8 @@ class TestStorage:
             """, (
                 run_id,
                 test.get("name"),
-                test.get("passed", False),
-                test.get("details"),
+                passed_value,
+                details,
                 test.get("latency_ms", 0),
             ))
 
